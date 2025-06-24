@@ -1,6 +1,14 @@
 # simpfor-fun-sdk
 
-TypeScript SDK for interacting with the [Simpfor.fun](https://simpfor.fun) API, including authentication and copy trading flows.
+TypeScript SDK for interacting with the [Simpfor.fun](https://simpfor.fun) API, including copy trading, wallet management, and authentication flows.
+
+## Features
+- Copy trading (create, run, stop, list, PnL, etc.)
+- User authentication (email, Google, Privy)
+- Wallet management (KMS, builder, Solana, etc.)
+- Referral and coupon management
+- Deposit/bridge address management
+- Fully typed, promise-based API
 
 ## Installation
 
@@ -8,10 +16,10 @@ TypeScript SDK for interacting with the [Simpfor.fun](https://simpfor.fun) API, 
 npm install simpfor-fun-sdk
 ```
 
-## Build (for development)
+or
 
 ```bash
-npm run build
+yarn add simpfor-fun-sdk
 ```
 
 ## Usage
@@ -19,53 +27,55 @@ npm run build
 ```typescript
 import { SimpforFunSDK } from 'simpfor-fun-sdk';
 
+const sdk = new SimpforFunSDK();
+
 (async () => {
-  const sdk = new SimpforFunSDK();
+  // Example: Email login
   await sdk.sendVerificationCode('your@email.com');
-  const loginRes = await sdk.verifyOtp('your@email.com', 'YOUR_OTP_CODE');
+  const loginRes = await sdk.verifyOtp('your@email.com', '123456');
   const userId = loginRes?.data?.user?.uid;
-  if (!userId) throw new Error('User ID not found');
 
   // Fetch top traders
   const traders = await sdk.fetchTopTraders();
 
   // Create a copy trade
-  const copyTrade = await sdk.createCopyTrade(userId, 'LEADER_ACCOUNT', 'FOLLOWER_ACCOUNT');
+  const copyTrade = await sdk.createCopyTrade(userId, 'EXPERT_ADDRESS', 'FOLLOWER_ADDRESS');
 
-  // Run the copy trade
-  await sdk.runCopyTrade(userId, copyTrade.data.info.copyTradeId);
-
-  // List open copy trades
-  const openTrades = await sdk.listCopyTrades(userId);
-
-  // Get copy trade PnL history
-  const pnlHistory = await sdk.getCopyTradeHistoryPnl(userId, 'FOLLOWER_ACCOUNT');
-
-  // Get copy trade details
-  const tradeDetails = await sdk.getCopyTradeDetails(userId, copyTrade.data.info.copyTradeId);
-
-  // Stop the copy trade
-  await sdk.stopCopyTrade(userId, copyTrade.data.info.copyTradeId, true);
+  // ... see src/example.ts for more usage examples
 })();
 ```
 
-## API
+## API Overview
+
+The SDK exposes a class `SimpforFunSDK` with methods for all major Simpfor.fun API endpoints. All methods are fully typed and return promises.
 
 ### Authentication
 - `sendVerificationCode(email: string)`
 - `verifyOtp(email: string, code: string)`
+- `googleLogin(...)`, `privyLogin(...)`, `signUp(...)`, `logout()`
 
 ### Copy Trading
-- `fetchTopTraders()`
-- `createCopyTrade(userId, leaderAccount, followerAccount)`
-- `runCopyTrade(userId, copyTradeId)`
-- `stopCopyTrade(userId, copyTradeId, closePositions?)`
-- `listCopyTrades(userId)`
-- `getCopyTradeHistoryPnl(userId, followerAccount, sortByPnlDesc?, page?)`
-- `getCopyTradeDetails(userId, copyTradeId, page?)`
+- `createCopyTrade(...)`, `runCopyTrade(...)`, `stopCopyTrade(...)`, `listCopyTrades(...)`, `getCopyTradeHistoryPnl(...)`, `getCopyTradeDetails(...)`
+
+### Wallet
+- `activateKmsWallet(...)`, `bindBuilder(...)`, `checkWallet(...)`, `createKmsKey(...)`, `getBuilderFee(...)`, `walletList(...)`, `refreshAgentWallet(...)`
+
+### User
+- `addWatchedTrader(...)`, `claimCommission(...)`, `claimCoupon(...)`, `userCoupons(...)`, `getReferralCodeByChannelId(...)`, `getReferralCommission(...)`, `getReferralInfo(...)`, `getReferralList(...)`, `removeWatchedTrader(...)`, `getSolanaAddresses(...)`, `getSolanaAuthMessage(...)`, `linkSolanaAddress(...)`, `userWalletInfo(...)`, `getWatchedTraders(...)`
+
+### Deposit/Bridge
+- `getBridgeAddress(...)`, `listBridgeAddress(...)`, `registerBridgeAddress(...)`
+
+### More
+- See the [API documentation](https://github.com/rkmonarch/simpfor-fun-sdk) and `src/example.ts` for full usage examples and all available methods.
+
+## TypeScript Support
+All request and response types are exported and fully documented in the SDK.
+
+## Contributing
+Pull requests and issues are welcome! Please see the [issues page](https://github.com/rkmonarch/simpfor-fun-sdk/issues) to report bugs or request features.
 
 ## License
-
 ISC
 
 ---
