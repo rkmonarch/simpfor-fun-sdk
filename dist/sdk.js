@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SimpforFunSDK = void 0;
 const axios_1 = __importDefault(require("axios"));
-const HOST_URL = 'https://hype-api.nonprod.simpfor.fun';
+const HOST_URL = 'https://hype-api.simpfor.fun';
 class SimpforFunSDK {
     constructor(hostUrl = HOST_URL) {
         this.accessToken = null;

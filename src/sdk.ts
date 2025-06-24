@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const HOST_URL = 'https://hype-api.nonprod.simpfor.fun';
+const HOST_URL = 'https://hype-api.simpfor.fun';
 
 // --- Types ---
 export interface User {
