@@ -1,0 +1,41 @@
+{
+  "name": "simpfor-fun-sdk",
+  "version": "1.0.0",
+  "description": "TypeScript SDK for interacting with the Simpfor.fun API, including copy trading and authentication flows.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {
+    "axios": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.9.36",
+    "@types/node": "^20.11.19",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rkmonarch/simpfor-fun-sdk.git"
+  },
+  "keywords": [
+    "simpfor.fun",
+    "SDK",
+    "typescript",
+    "copy-trading",
+    "api"
+  ],
+  "author": "rkmonarch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rkmonarch/simpfor-fun-sdk/issues"
+  },
+  "homepage": "https://github.com/rkmonarch/simpfor-fun-sdk#readme"
+}
